@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Dmitry Ostroukhov](https://up.htmlacademy.ru/javascript/23/user/982629).
-* Наставник: `Неизвестно`.
+* Наставник: [Сергей Шершнев](https://up.htmlacademy.ru/javascript/23/user/587797).
 
 ---
 
