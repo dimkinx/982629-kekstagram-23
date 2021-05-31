@@ -1,16 +1,16 @@
-// eslint-disable-next-line no-unused-vars
-const getRandomInteger = function(min, max) {
-  const ArgumentsError = function(message) {
-    this.name = 'Ошибка переданных значений аргументов функции getRandomInteger';
-    this.message = message;
-  };
+const ArgumentsError = function(message) {
+  this.name = 'Ошибка переданных значений аргументов функции';
+  this.message = message;
+};
 
-  if (min < 0 && max <= min) {
+// eslint-disable-next-line no-unused-vars
+const getRandomInteger = (min, max) => {
+  if (min < 0 && max <= 0) {
     throw new ArgumentsError('Неверно задан диапазон значений!');
   }
 
-  if (min < 0) {
-    throw new ArgumentsError('Значение первого аргумента не натуральное число!');
+  if (min < 0 || max < 0) {
+    throw new ArgumentsError('Значения аргументов должны быть натуральными числами!');
   }
 
   if (max <= min) {
@@ -18,7 +18,6 @@ const getRandomInteger = function(min, max) {
   }
 
   try {
-    // Ilya Kantor's solution from https://javascript.info/task/random-int-min-max
     return Math.floor(min + Math.random() * (max + 1 - min));
   } catch (error) {
     // eslint-disable-next-line no-console
