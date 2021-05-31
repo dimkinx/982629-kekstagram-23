@@ -10,11 +10,11 @@ const getRandomInteger = (min, max) => {
   }
 
   if (min < 0) {
-    throw new ArgumentsError('Значение первого аргумента должно быть натуральным числом');
+    throw new ArgumentsError('Значение первого аргумента должно быть натуральным числом!');
   }
 
   if (max < 0) {
-    throw new ArgumentsError('Значение второго аргумента должно быть натуральным числом');
+    throw new ArgumentsError('Значение второго аргумента должно быть натуральным числом!');
   }
 
   if (max <= min) {
