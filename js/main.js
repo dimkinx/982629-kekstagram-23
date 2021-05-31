@@ -5,12 +5,16 @@ const ArgumentsError = function(message) {
 
 // eslint-disable-next-line no-unused-vars
 const getRandomInteger = (min, max) => {
-  if (min < 0 && max <= 0) {
-    throw new ArgumentsError('Неверно задан диапазон значений!');
+  if (min < 0 && max < 0) {
+    throw new ArgumentsError('Значения аргументов должны быть натуральными числами!');
   }
 
-  if (min < 0 || max < 0) {
-    throw new ArgumentsError('Значения аргументов должны быть натуральными числами!');
+  if (min < 0) {
+    throw new ArgumentsError('Значение первого аргумента должно быть натуральным числом');
+  }
+
+  if (max < 0) {
+    throw new ArgumentsError('Значение второго аргумента должно быть натуральным числом');
   }
 
   if (max <= min) {
