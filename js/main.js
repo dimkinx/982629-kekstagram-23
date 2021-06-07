@@ -3,22 +3,7 @@ const MAX_COMMENT_LENGTH = 140;
 
 let commentId = 0;
 
-const AvatarRange = {
-  MIN: 1,
-  MAX: 6,
-};
-
-const CommentsRange = {
-  MIN: 1,
-  MAX: 20,
-};
-
-const LikesRange = {
-  MIN: 15,
-  MAX: 200,
-};
-
-const photosDescriptions = [
+const PHOTOS_DESCRIPTIONS = [
   'Отель Eden (город Ровинь, Хорватия)',
   'Karon Beach (остров Пхукет, Таиланд)',
   'Пляж (остров Натуна, Кепулауан-Риау, Индонезия)',
@@ -46,7 +31,7 @@ const photosDescriptions = [
   'Bali Safari and Marine Park - парк культуры и отдыха (остров Бали, Индонезия)',
 ];
 
-const usersComments = [
+const USERS_COMMENTS = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -55,7 +40,7 @@ const usersComments = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
-const usersNames = [
+const USERS_NAMES = [
   'Рэйчел Карен Грин',
   'Моника Е. Геллер',
   'Фиби Буффе',
@@ -72,6 +57,21 @@ const usersNames = [
   'Ривер Тэм',
   'Дерриал «Пастор» Бук',
 ];
+
+const AvatarsRange = {
+  MIN: 1,
+  MAX: 6,
+};
+
+const CommentsRange = {
+  MIN: 1,
+  MAX: 20,
+};
+
+const LikesRange = {
+  MIN: 15,
+  MAX: 200,
+};
 
 const getRandomPositiveInteger = (firstNumber, secondNumber) => {
   const lower = Math.ceil(Math.min(Math.abs(firstNumber), Math.abs(secondNumber)));
@@ -105,9 +105,9 @@ const makeMessage = (array) => {
 
 const makeComment = (id) => ({
   id: id,
-  avatar: `img/avatar-${getRandomPositiveInteger(AvatarRange.MIN, AvatarRange.MAX)}.svg`,
-  message: makeMessage(usersComments),
-  name: usersNames[getRandomPositiveInteger(0, usersNames.length - 1)],
+  avatar: `img/avatar-${getRandomPositiveInteger(AvatarsRange.MIN, AvatarsRange.MAX)}.svg`,
+  message: makeMessage(USERS_COMMENTS),
+  name: USERS_NAMES[getRandomPositiveInteger(0, USERS_NAMES.length - 1)],
 });
 
 const getComments = (number) => Array(number).fill(null).map(() => makeComment(++commentId));
@@ -115,7 +115,7 @@ const getComments = (number) => Array(number).fill(null).map(() => makeComment(+
 const makePhoto = (id) => ({
   id: id,
   url: `photos/${id}.jpg`,
-  description: `${photosDescriptions[--id]}`,
+  description: `${PHOTOS_DESCRIPTIONS[--id]}`,
   likes: getRandomPositiveInteger(LikesRange.MIN, LikesRange.MAX),
   comments: getComments(getRandomPositiveInteger(CommentsRange.MIN, CommentsRange.MAX)),
 });
