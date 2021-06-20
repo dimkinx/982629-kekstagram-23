@@ -1,9 +1,13 @@
-const picturesElement = document.querySelector('.pictures');
+import {makeFragmentRender} from './util.js';
+
+const picturesContainerElement = document.querySelector('.pictures');
 const pictureTemplateElement = document.querySelector('#picture');
+const pictureElement = pictureTemplateElement.content.querySelector('.picture');
 
 const createPicture = (data) => {
-  const picture = pictureTemplateElement.content.cloneNode(true);
+  const picture = pictureElement.cloneNode(true);
 
+  picture.dataset.index = data.id;
   picture.querySelector('.picture__img').src = data.url;
   picture.querySelector('.picture__likes').textContent = data.likes;
   picture.querySelector('.picture__comments').textContent = data.comments.length;
@@ -11,20 +15,13 @@ const createPicture = (data) => {
   return picture;
 };
 
-const makeFragmentRender = (render) => (dataList) => {
-  const fragment = document.createDocumentFragment();
-
-  dataList.forEach((data) => {
-    fragment.appendChild(render(data));
-  });
-
-  return fragment;
-};
-
 const getPictureFragment = makeFragmentRender(createPicture);
 
 const renderPictures = (data) => {
-  picturesElement.appendChild(getPictureFragment(data));
+  picturesContainerElement.appendChild(getPictureFragment(data));
 };
 
-export {picturesElement, renderPictures};
+export {
+  picturesContainerElement as container,
+  renderPictures as render
+};

@@ -1,23 +1,36 @@
-import {mockData} from './mock-data.js';
-import {picturesElement, renderPictures} from './pictures.js';
-import {initModal} from './modal.js';
+import * as pictures from './pictures.js';
+import * as bigPicture from './big-picture.js';
+import mockData from './mock-data.js';
+import initModal from './modal.js';
 
-const bigPictureModalElement = document.querySelector('.big-picture');
-const bigPictureCloseButton = bigPictureModalElement.querySelector('.big-picture__cancel');
+const photosData = mockData;
 
 const showGallery = () => {
-  renderPictures(mockData);
+  pictures.render(photosData);
 
-  const pictureLink = document.querySelector('.picture');
+  const pictureLink = pictures.container.querySelector('.picture');
   const pictureImg = pictureLink.querySelector('.picture__img');
 
   const openModalClickHandler = (evt) => {
-    if (evt.target.matches(pictureLink.tagName) || evt.target.matches(pictureImg.tagName)) {
-      initModal(bigPictureModalElement, bigPictureCloseButton);
+    evt.preventDefault();
+
+    const targetElement = evt.target;
+
+    if (targetElement.matches(pictureLink.tagName) || targetElement.matches(pictureImg.tagName)) {
+      const photoData = (targetElement.matches(pictureImg.tagName))
+        ? photosData[targetElement.parentElement.dataset.index - 1]
+        : photosData[targetElement.dataset.index - 1];
+
+      bigPicture.update(photoData);
+
+      initModal(bigPicture.overlayElement, bigPicture.modalElement, bigPicture.closeButton);
+
+      bigPicture.socialCommentCountElement.classList.add('hidden');
+      bigPicture.socialCommentsLoaderButton.classList.add('hidden');
     }
   };
 
-  picturesElement.addEventListener('click', openModalClickHandler);
+  pictures.container.addEventListener('click', openModalClickHandler);
 };
 
-export {showGallery};
+export default showGallery;

@@ -1,3 +1,3 @@
-import {showGallery} from './gallery.js';
+import showGallery from './gallery.js';
 
 showGallery();

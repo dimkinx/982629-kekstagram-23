@@ -2,19 +2,8 @@ import {isEscEvent} from './util.js';
 
 const bodyElement = document.querySelector('body');
 
-const initModal = (modalElement, closeButton) => {
+const initModal = (overlayElement, modalElement, closeButton) => {
   const lastFocus = document.activeElement;
-
-  const escKeydownHandler = (evt) => {
-    if (isEscEvent(evt)) {
-      evt.preventDefault();
-      closeModal();
-    }
-  };
-
-  const closeButtonClickHandler = () => {
-    closeModal();
-  };
 
   const modalElementFocusHandler = (evt) => {
     if (!modalElement.contains(evt.target)) {
@@ -23,14 +12,33 @@ const initModal = (modalElement, closeButton) => {
     }
   };
 
+  const escKeydownHandler = (evt) => {
+    if (isEscEvent(evt)) {
+      evt.preventDefault();
+      closeModal();
+    }
+  };
+
+  const overlayElementClickHandler = (evt) => {
+    if (evt.target.matches(overlayElement.tagName)) {
+      closeModal();
+    }
+  };
+
+  const closeButtonClickHandler = () => {
+    closeModal();
+  };
+
   function closeModal () {
-    if (modalElement) {
-      modalElement.classList.add('hidden');
+    if (overlayElement) {
       bodyElement.classList.remove('modal-open');
+      overlayElement.classList.add('hidden');
+      modalElement.removeAttribute('tabindex');
       lastFocus.focus();
 
       document.removeEventListener('focus', modalElementFocusHandler, true);
       document.removeEventListener('keydown', escKeydownHandler);
+      overlayElement.removeEventListener('click', overlayElementClickHandler);
 
       if (closeButton) {
         closeButton.removeEventListener('click', closeButtonClickHandler);
@@ -38,13 +46,15 @@ const initModal = (modalElement, closeButton) => {
     }
   }
 
-  if (modalElement) {
-    modalElement.classList.remove('hidden');
+  if (overlayElement && modalElement) {
     bodyElement.classList.add('modal-open');
+    overlayElement.classList.remove('hidden');
+    modalElement.tabIndex = -1;
     modalElement.focus();
 
     document.addEventListener('focus', modalElementFocusHandler, true);
     document.addEventListener('keydown', escKeydownHandler);
+    overlayElement.addEventListener('click', overlayElementClickHandler);
 
     if (closeButton) {
       closeButton.addEventListener('click', closeButtonClickHandler);
@@ -52,4 +62,4 @@ const initModal = (modalElement, closeButton) => {
   }
 };
 
-export {initModal};
+export default initModal;

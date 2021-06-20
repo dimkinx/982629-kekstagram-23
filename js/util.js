@@ -21,10 +21,22 @@ const cropString = (string, length) => !checkStringLength(string) && string
 
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
+
+const makeFragmentRender = (render) => (dataList) => {
+  const fragment = document.createDocumentFragment();
+
+  dataList.forEach((data) => {
+    fragment.appendChild(render(data));
+  });
+
+  return fragment;
+};
+
 export {
   getRandomPositiveInteger,
   shuffleArray,
   checkStringLength,
   cropString,
-  isEscEvent
+  isEscEvent,
+  makeFragmentRender
 };

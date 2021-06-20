@@ -107,4 +107,4 @@ const getPhotosData = (number) => getPhotosIds(number).map(makePhoto);
 
 const mockData = getPhotosData(PHOTOS_NUM);
 
-export {mockData};
+export default mockData;
