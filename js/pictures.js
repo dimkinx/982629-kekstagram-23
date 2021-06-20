@@ -13,6 +13,7 @@ const createPicture = (data) => {
 
 const makeFragmentRender = (render) => (dataList) => {
   const fragment = document.createDocumentFragment();
+
   dataList.forEach((data) => {
     fragment.appendChild(render(data));
   });
@@ -26,4 +27,4 @@ const renderPictures = (data) => {
   picturesElement.appendChild(getPictureFragment(data));
 };
 
-export {renderPictures};
+export {picturesElement, renderPictures};

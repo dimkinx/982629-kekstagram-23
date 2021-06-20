@@ -19,4 +19,12 @@ const cropString = (string, length) => !checkStringLength(string) && string
   .slice(0, length - 3)
   .padEnd(length, '.');
 
-export {getRandomPositiveInteger, shuffleArray, checkStringLength, cropString};
+const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
+
+export {
+  getRandomPositiveInteger,
+  shuffleArray,
+  checkStringLength,
+  cropString,
+  isEscEvent
+};

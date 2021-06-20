@@ -1,4 +1,3 @@
-import {mockData} from './mock-data.js';
-import {renderPictures} from './pictures.js';
+import {showGallery} from './gallery.js';
 
-renderPictures(mockData);
+showGallery();
