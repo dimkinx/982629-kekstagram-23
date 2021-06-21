@@ -1,4 +1,4 @@
-import * as util from './util.js';
+import {getRandomPositiveInteger, shuffleArray, checkStringLength, cropString} from './util.js';
 
 const PHOTOS_NUM = 25;
 const MAX_COMMENT_LENGTH = 140;
@@ -76,19 +76,19 @@ const LikesRange = {
 };
 
 const makeMessage = (array) => {
-  const [firstMessage, secondMessage] = util.shuffleArray(array);
+  const [firstMessage, secondMessage] = shuffleArray(array);
   const singleMessage = secondMessage;
   const doubleMessage = `${firstMessage} ${secondMessage}`;
   const message = (Math.random() >= 0.5) ? doubleMessage : singleMessage;
 
-  return util.checkStringLength(message, MAX_COMMENT_LENGTH) ? message : util.cropString(message, MAX_COMMENT_LENGTH);
+  return checkStringLength(message, MAX_COMMENT_LENGTH) ? message : cropString(message, MAX_COMMENT_LENGTH);
 };
 
 const makeComment = (id) => ({
   id: id,
-  avatar: `img/avatar-${util.getRandomPositiveInteger(AvatarsRange.MIN, AvatarsRange.MAX)}.svg`,
+  avatar: `img/avatar-${getRandomPositiveInteger(AvatarsRange.MIN, AvatarsRange.MAX)}.svg`,
   message: makeMessage(USERS_COMMENTS),
-  name: USERS_NAMES[util.getRandomPositiveInteger(0, USERS_NAMES.length - 1)],
+  name: USERS_NAMES[getRandomPositiveInteger(0, USERS_NAMES.length - 1)],
 });
 
 const getComments = (number) => Array(number).fill(null).map(() => makeComment(++commentId));
@@ -97,8 +97,8 @@ const makePhoto = (id) => ({
   id: id,
   url: `photos/${id}.jpg`,
   description: `${PHOTOS_DESCRIPTIONS[--id]}`,
-  likes: util.getRandomPositiveInteger(LikesRange.MIN, LikesRange.MAX),
-  comments: getComments(util.getRandomPositiveInteger(CommentsRange.MIN, CommentsRange.MAX)),
+  likes: getRandomPositiveInteger(LikesRange.MIN, LikesRange.MAX),
+  comments: getComments(getRandomPositiveInteger(CommentsRange.MIN, CommentsRange.MAX)),
 });
 
 const getPhotosIds = (number) => Array(number).fill(null).map((_, index) => ++index);
@@ -107,4 +107,4 @@ const getPhotosData = (number) => getPhotosIds(number).map(makePhoto);
 
 const mockData = getPhotosData(PHOTOS_NUM);
 
-export {mockData};
+export default mockData;
