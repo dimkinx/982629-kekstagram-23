@@ -1,65 +1,82 @@
 import {isEscEvent} from './util.js';
 
-const bodyElement = document.querySelector('body');
+const bodyElement = document.body;
 
-const initModal = (overlayElement, modalElement, closeButton) => {
-  const lastFocus = document.activeElement;
+const init = {};
 
-  const modalElementFocusHandler = (evt) => {
-    if (!modalElement.contains(evt.target)) {
-      evt.stopPropagation();
-      modalElement.focus();
-    }
-  };
+const modalElementFocusHandler = (evt) => {
+  if (!init.modalElement.contains(evt.target)) {
+    evt.stopPropagation();
+    init.modalElement.focus();
+  }
+};
 
-  const escKeydownHandler = (evt) => {
-    if (isEscEvent(evt)) {
-      evt.preventDefault();
-      closeModal();
-    }
-  };
-
-  const overlayElementClickHandler = (evt) => {
-    if (evt.target.matches(overlayElement.tagName)) {
-      closeModal();
-    }
-  };
-
-  const closeButtonClickHandler = () => {
+const escKeydownHandler = (evt) => {
+  if (isEscEvent(evt)) {
+    evt.preventDefault();
     closeModal();
-  };
+  }
+};
 
-  function closeModal () {
-    if (overlayElement) {
-      bodyElement.classList.remove('modal-open');
-      overlayElement.classList.add('hidden');
-      modalElement.removeAttribute('tabindex');
-      lastFocus.focus();
+const overlayElementClickHandler = (evt) => {
+  if (evt.target.matches(init.overlayElement.tagName)) {
+    closeModal();
+  }
+};
 
-      document.removeEventListener('focus', modalElementFocusHandler, true);
-      document.removeEventListener('keydown', escKeydownHandler);
-      overlayElement.removeEventListener('click', overlayElementClickHandler);
+const closeButtonClickHandler = () => {
+  closeModal();
+};
 
-      if (closeButton) {
-        closeButton.removeEventListener('click', closeButtonClickHandler);
-      }
+function closeModal () {
+  if (init.overlayElement) {
+    bodyElement.classList.remove('modal-open');
+    window.scrollTo(0, init.scrollPosition);
+    bodyElement.removeAttribute('style');
+    init.modalElement.removeAttribute('tabindex');
+    init.overlayElement.classList.add('hidden');
+    init.lastFocus.focus();
+
+    document.removeEventListener('focus', modalElementFocusHandler, true);
+    document.removeEventListener('keydown', escKeydownHandler);
+    init.overlayElement.removeEventListener('click', overlayElementClickHandler);
+
+    if (init.closeButton) {
+      init.closeButton.removeEventListener('click', closeButtonClickHandler);
     }
   }
+}
 
-  if (overlayElement && modalElement) {
+function openModal() {
+  init.lastFocus = document.activeElement;
+  init.scrollPosition = window.pageYOffset;
+  init.paddingSize = window.innerWidth - bodyElement.clientWidth;
+
+  bodyElement.style.top = `-${init.scrollPosition}px`;
+
+  if (init.paddingSize) {
+    bodyElement.style.paddingRight = `${init.paddingSize}px`;
+  }
+
+  if (init.overlayElement && init.modalElement) {
     bodyElement.classList.add('modal-open');
-    overlayElement.classList.remove('hidden');
-    modalElement.tabIndex = -1;
-    modalElement.focus();
+    init.overlayElement.classList.remove('hidden');
+    init.modalElement.tabIndex = -1;
+    init.modalElement.focus();
 
     document.addEventListener('focus', modalElementFocusHandler, true);
     document.addEventListener('keydown', escKeydownHandler);
-    overlayElement.addEventListener('click', overlayElementClickHandler);
+    init.overlayElement.addEventListener('click', overlayElementClickHandler);
 
-    if (closeButton) {
-      closeButton.addEventListener('click', closeButtonClickHandler);
+    if (init.closeButton) {
+      init.closeButton.addEventListener('click', closeButtonClickHandler);
     }
   }
+}
+
+const initModal = (...args) => {
+  [init.overlayElement, init.modalElement, init.closeButton] = [...args];
+  openModal();
 };
 
 export default initModal;

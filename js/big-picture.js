@@ -65,10 +65,10 @@ const updateBigPicture = (data) => {
 };
 
 export {
-  bigPictureOverlayElement as overlayElement,
-  bigPictureModalElement as modalElement,
-  bigPictureCloseButton as closeButton,
-  bigPictureSocialCommentCountElement as socialCommentCountElement,
-  bigPictureCommentsLoaderButton as socialCommentsLoaderButton,
-  updateBigPicture as update
+  bigPictureOverlayElement,
+  bigPictureModalElement,
+  bigPictureCloseButton,
+  bigPictureSocialCommentCountElement,
+  bigPictureCommentsLoaderButton,
+  updateBigPicture
 };

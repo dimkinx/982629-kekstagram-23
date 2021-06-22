@@ -1,5 +1,5 @@
 import * as pictures from './pictures.js';
-import * as bigPicture from './big-picture.js';
+import {bigPictureCloseButton, bigPictureModalElement, bigPictureOverlayElement, updateBigPicture} from './big-picture.js';
 import mockData from './mock-data.js';
 import initModal from './modal.js';
 
@@ -21,12 +21,8 @@ const showGallery = () => {
         ? photosData[targetElement.parentElement.dataset.index - 1]
         : photosData[targetElement.dataset.index - 1];
 
-      bigPicture.update(photoData);
-
-      initModal(bigPicture.overlayElement, bigPicture.modalElement, bigPicture.closeButton);
-
-      bigPicture.socialCommentCountElement.classList.add('hidden');
-      bigPicture.socialCommentsLoaderButton.classList.add('hidden');
+      updateBigPicture(photoData);
+      initModal(bigPictureOverlayElement, bigPictureModalElement, bigPictureCloseButton);
     }
   };
 
