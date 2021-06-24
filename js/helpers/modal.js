@@ -39,7 +39,10 @@ function closeModal () {
 
     document.removeEventListener('focus', modalElementFocusHandler, true);
     document.removeEventListener('keydown', escKeydownHandler);
-    init.overlayElement.removeEventListener('click', overlayElementClickHandler);
+
+    if (init.isOverlayClickable) {
+      init.overlayElement.removeEventListener('click', overlayElementClickHandler);
+    }
 
     if (init.closeButton) {
       init.closeButton.removeEventListener('click', closeButtonClickHandler);
@@ -66,7 +69,10 @@ function openModal() {
 
     document.addEventListener('focus', modalElementFocusHandler, true);
     document.addEventListener('keydown', escKeydownHandler);
-    init.overlayElement.addEventListener('click', overlayElementClickHandler);
+
+    if (init.isOverlayClickable) {
+      init.overlayElement.addEventListener('click', overlayElementClickHandler);
+    }
 
     if (init.closeButton) {
       init.closeButton.addEventListener('click', closeButtonClickHandler);
@@ -75,7 +81,7 @@ function openModal() {
 }
 
 const initModal = (...args) => {
-  [init.overlayElement, init.modalElement, init.closeButton] = [...args];
+  [init.modalElement, init.closeButton, init.overlayElement, init.isOverlayClickable] = [...args];
   openModal();
 };
 
