@@ -21,7 +21,6 @@ const cropString = (string, length) => !checkStringLength(string) && string
 
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
-
 const makeFragmentRender = (render) => (dataList) => {
   const fragment = document.createDocumentFragment();
 

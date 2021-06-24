@@ -1,4 +1,4 @@
-import {makeFragmentRender} from './util.js';
+import {makeFragmentRender} from '../helpers/util.js';
 
 const  AvatarSize = {
   WIDTH: 35,

@@ -1,4 +1,4 @@
-import {getRandomPositiveInteger, shuffleArray, checkStringLength, cropString} from './util.js';
+import {getRandomPositiveInteger, shuffleArray, checkStringLength, cropString} from '../helpers/util.js';
 
 const PHOTOS_NUM = 25;
 const MAX_COMMENT_LENGTH = 140;
