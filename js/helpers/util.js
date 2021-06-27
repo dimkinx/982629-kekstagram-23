@@ -21,6 +21,8 @@ const cropString = (string, length) => !checkStringLength(string) && string
 
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
+const isSpaceEvent = (evt) => evt.key === ' ';
+
 const makeFragmentRender = (render) => (dataList) => {
   const fragment = document.createDocumentFragment();
 
@@ -37,5 +39,6 @@ export {
   checkStringLength,
   cropString,
   isEscEvent,
+  isSpaceEvent,
   makeFragmentRender
 };

@@ -12,7 +12,9 @@ const modalElementFocusHandler = (evt) => {
 };
 
 const escKeydownHandler = (evt) => {
-  if (isEscEvent(evt)) {
+  if (evt.target.tagName !== 'INPUT'
+    && evt.target.tagName !== 'TEXTAREA'
+    && isEscEvent(evt)) {
     evt.preventDefault();
     closeModal();
   }
@@ -48,6 +50,10 @@ function closeModal () {
       init.closeButton.removeEventListener('click', closeButtonClickHandler);
     }
   }
+
+  if (init.closeModalCallback) {
+    init.closeModalCallback();
+  }
 }
 
 function openModal() {
@@ -78,10 +84,22 @@ function openModal() {
       init.closeButton.addEventListener('click', closeButtonClickHandler);
     }
   }
+
+  if (init.openModalCallback) {
+    init.openModalCallback();
+  }
 }
 
 const initModal = (...args) => {
-  [init.modalElement, init.closeButton, init.overlayElement, init.isOverlayClickable] = [...args];
+  [
+    init.modalElement,
+    init.closeButton,
+    init.overlayElement,
+    init.isOverlayClickable,
+    init.openModalCallback,
+    init.closeModalCallback,
+  ] = [...args];
+
   openModal();
 };
 

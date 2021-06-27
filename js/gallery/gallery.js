@@ -17,7 +17,12 @@ const openModalClickHandler = (evt) => {
       : photosData[targetElement.dataset.index - 1];
 
     updateBigPicture(photoData);
-    initModal(bigPictureModalElement, bigPictureCloseButton, bigPictureOverlayElement, isOverlayClickable);
+    initModal(
+      bigPictureModalElement,
+      bigPictureCloseButton,
+      bigPictureOverlayElement,
+      isOverlayClickable,
+    );
   }
 };
 
