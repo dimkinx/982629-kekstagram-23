@@ -697,8 +697,30 @@ main {
   color: #000000;
 
   border-radius: 5px;
+  resize: vertical;
 }
 
+/**
+ * Стили для валидных полей в фокусе
+ */
+
+.text__hashtags:focus:valid,
+.text__description:focus:valid {
+  color: #008000;
+  border-color: #008000;
+  background-color: #e9ffe9;
+}
+
+/**
+ * Стили для невалидных полей
+ */
+
+.text__hashtags:invalid,
+.text__description:invalid {
+  color: #900;
+  border-color: #900;
+  background-color: #fdd;
+}
 
 /**
  * Кнопка для отправки изображения
