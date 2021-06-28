@@ -5,6 +5,7 @@ const descriptionTextareaElement = document.querySelector('.text__description');
 
 const HASHTAGS_MAX_NUM = 5;
 const HASHTAG_MAX_LENGTH = 20;
+const DESCRIPTION_MAX_LENGTH = 140;
 
 const getRemainderOfNum = function (num) {
   if (num % 100 > 19) {
@@ -70,13 +71,24 @@ const getHashtagsErrorMessage = (hashtags) => {
   return '';
 };
 
-const focusHandler = () => {
+const getDescriptionErrorMessage = (description) => {
+  if (description.length > DESCRIPTION_MAX_LENGTH) {
+    const difference = description.length - DESCRIPTION_MAX_LENGTH;
+    const words = getEndingWords(difference, 'символ', 'символа', 'символов');
+
+    return `Вы превысили максимальную длину комментария на ${difference} ${words} из 140 доступных`;
+  }
+
+  return '';
+};
+
+const hashtagFocusHandler = () => {
   if (hashtagsInputElement.value === '') {
     hashtagsInputElement.value = '#';
   }
 };
 
-const blurHandler = () => {
+const hashtagBlurHandler = () => {
   if (hashtagsInputElement.value === '#') {
     hashtagsInputElement.value = '';
   } else if (hashtagsInputElement.value.slice(-1) === '#') {
@@ -88,7 +100,7 @@ const blurHandler = () => {
   hashtagsInputElement.reportValidity();
 };
 
-const inputHandler = () => {
+const hashtagInputHandler = () => {
   if (hashtagsInputElement.value !== '' && hashtagsInputElement.value.slice(0, 1) !== '#') {
     hashtagsInputElement.value = `#${hashtagsInputElement.value}`;
   }
@@ -98,7 +110,7 @@ const inputHandler = () => {
   hashtagsInputElement.reportValidity();
 };
 
-const spaceKeydownHandler = (evt) => {
+const hashtagSpaceKeydownHandler = (evt) => {
   if (isSpaceEvent(evt) && hashtagsInputElement.value.slice(-1) === '#') {
     evt.preventDefault();
   } else if (isSpaceEvent(evt) && hashtagsInputElement.value === '') {
@@ -113,19 +125,27 @@ const spaceKeydownHandler = (evt) => {
   hashtagsInputElement.reportValidity();
 };
 
-const initHashtagValidation = () => {
-  hashtagsInputElement.addEventListener('focus', focusHandler);
-  hashtagsInputElement.addEventListener('blur', blurHandler);
-  hashtagsInputElement.addEventListener('input', inputHandler);
-  hashtagsInputElement.addEventListener('keydown', spaceKeydownHandler);
+const descriptionInputHandler = () => {
+  descriptionTextareaElement.setCustomValidity(getDescriptionErrorMessage(descriptionTextareaElement.value));
+  descriptionTextareaElement.reportValidity();
 };
 
-const destroyHashtagValidation = () => {
-  hashtagsInputElement.removeEventListener('focus', focusHandler);
-  hashtagsInputElement.removeEventListener('blur', blurHandler);
-  hashtagsInputElement.removeEventListener('input', inputHandler);
-  hashtagsInputElement.removeEventListener('keydown', spaceKeydownHandler);
+const initValidation = () => {
+  hashtagsInputElement.addEventListener('focus', hashtagFocusHandler);
+  hashtagsInputElement.addEventListener('blur', hashtagBlurHandler);
+  hashtagsInputElement.addEventListener('input', hashtagInputHandler);
+  hashtagsInputElement.addEventListener('keydown', hashtagSpaceKeydownHandler);
+  descriptionTextareaElement.addEventListener('input', descriptionInputHandler);
+};
+
+const destroyValidation = () => {
+  hashtagsInputElement.removeEventListener('focus', hashtagFocusHandler);
+  hashtagsInputElement.removeEventListener('blur', hashtagBlurHandler);
+  hashtagsInputElement.removeEventListener('input', hashtagInputHandler);
+  hashtagsInputElement.removeEventListener('keydown', hashtagSpaceKeydownHandler);
+  descriptionTextareaElement.removeEventListener('input', descriptionInputHandler);
   hashtagsInputElement.setCustomValidity('');
+  descriptionTextareaElement.setCustomValidity('');
 };
 
-export {hashtagsInputElement, descriptionTextareaElement, initHashtagValidation, destroyHashtagValidation};
+export {hashtagsInputElement, descriptionTextareaElement, initValidation, destroyValidation};

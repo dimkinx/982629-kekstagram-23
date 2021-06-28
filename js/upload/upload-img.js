@@ -2,9 +2,9 @@ import initModal from '../helpers/modal.js';
 import {
   hashtagsInputElement,
   descriptionTextareaElement,
-  initHashtagValidation,
-  destroyHashtagValidation
-} from './hashtag-validation.js';
+  initValidation,
+  destroyValidation
+} from './validation.js';
 
 const imgUploadInputElement = document.querySelector('.img-upload__input');
 const imgUploadOverlayElement = document.querySelector('.img-upload__overlay');
@@ -14,11 +14,11 @@ const imgUploadCloseButton = imgUploadModalElement.querySelector('.img-upload__c
 const isOverlayClickable = false;
 
 const openModalCallback = () => {
-  initHashtagValidation();
+  initValidation();
 };
 
 const closeModalCallback = () => {
-  destroyHashtagValidation();
+  destroyValidation();
   imgUploadInputElement.value = '';
   hashtagsInputElement.value = '';
   descriptionTextareaElement.value = '';
