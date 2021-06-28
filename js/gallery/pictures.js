@@ -1,4 +1,4 @@
-import {makeFragmentRender} from './util.js';
+import {makeFragmentRender} from '../helpers/util.js';
 
 const picturesContainerElement = document.querySelector('.pictures');
 const pictureTemplateElement = document.querySelector('#picture');
@@ -22,6 +22,6 @@ const renderPictures = (data) => {
 };
 
 export {
-  picturesContainerElement as container,
+  picturesContainerElement as containerElement,
   renderPictures as render
 };
