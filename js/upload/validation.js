@@ -7,7 +7,7 @@ const HASHTAGS_MAX_NUM = 5;
 const HASHTAG_MAX_LENGTH = 20;
 const DESCRIPTION_MAX_LENGTH = 140;
 
-const getRemainderOfNum = function (num) {
+const getRemainderOfNum = (num) => {
   if (num % 100 > 19) {
     return num % 10;
   }
@@ -15,7 +15,7 @@ const getRemainderOfNum = function (num) {
   return num % 100;
 };
 
-const getEndingWords = function (num, nominative, genitiveSingular, genitivePlural) {
+const getEndingWords = (num, nominative, genitiveSingular, genitivePlural) => {
   if (getRemainderOfNum(num) === 0 || getRemainderOfNum(num) > 4) {
     return genitivePlural;
   }
@@ -111,14 +111,16 @@ const hashtagInputHandler = () => {
 };
 
 const hashtagSpaceKeydownHandler = (evt) => {
-  if (isSpaceEvent(evt) && hashtagsInputElement.value.slice(-1) === '#') {
-    evt.preventDefault();
-  } else if (isSpaceEvent(evt) && hashtagsInputElement.value === '') {
-    evt.preventDefault();
-    hashtagsInputElement.value = '#';
-  } else if (isSpaceEvent(evt) && hashtagsInputElement.value !== '') {
-    evt.preventDefault();
-    hashtagsInputElement.value = `${hashtagsInputElement.value} #`;
+  if (isSpaceEvent(evt)) {
+    if (hashtagsInputElement.value.slice(-1) === '#') {
+      evt.preventDefault();
+    } else if (hashtagsInputElement.value === '') {
+      evt.preventDefault();
+      hashtagsInputElement.value = '#';
+    } else if (hashtagsInputElement.value !== '') {
+      evt.preventDefault();
+      hashtagsInputElement.value = `${hashtagsInputElement.value} #`;
+    }
   }
 
   hashtagsInputElement.setCustomValidity(getHashtagsErrorMessage(hashtagsInputElement.value));
