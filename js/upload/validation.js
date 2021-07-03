@@ -86,6 +86,9 @@ const hashtagFocusHandler = () => {
   if (hashtagsInputElement.value === '') {
     hashtagsInputElement.value = '#';
   }
+
+  hashtagsInputElement.setCustomValidity(getHashtagsErrorMessage(hashtagsInputElement.value));
+  hashtagsInputElement.reportValidity();
 };
 
 const hashtagBlurHandler = () => {
