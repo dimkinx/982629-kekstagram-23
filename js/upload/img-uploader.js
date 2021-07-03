@@ -1,10 +1,11 @@
 import initModal from '../helpers/modal.js';
+import {initImgEditor, destroyImgEditor} from './img-editor.js';
 import {
   hashtagsInputElement,
   descriptionTextareaElement,
   initValidation,
   destroyValidation
-} from './validation.js';
+} from './text-validator.js';
 
 const imgUploadInputElement = document.querySelector('.img-upload__input');
 const imgUploadOverlayElement = document.querySelector('.img-upload__overlay');
@@ -14,10 +15,12 @@ const imgUploadCloseButton = imgUploadModalElement.querySelector('.img-upload__c
 const isOverlayClickable = false;
 
 const openModalCallback = () => {
+  initImgEditor();
   initValidation();
 };
 
 const closeModalCallback = () => {
+  destroyImgEditor();
   destroyValidation();
   imgUploadInputElement.value = '';
   hashtagsInputElement.value = '';
@@ -41,6 +44,6 @@ const openModalClickHandler = () => {
     );
 };
 
-const uploadImg = () => imgUploadInputElement.addEventListener('change', openModalClickHandler);
+const initImgUploader = () => imgUploadInputElement.addEventListener('change', openModalClickHandler);
 
-export default uploadImg;
+export default initImgUploader;
