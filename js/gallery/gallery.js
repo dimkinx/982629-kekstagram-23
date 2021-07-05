@@ -1,8 +1,9 @@
 import * as pictures from './pictures.js';
 import updateBigPicture from './big-picture.js';
-import mockData from '../data/mock-data.js';
-import initModal from '../helpers/modal.js';
+import {initModal} from '../helpers/modal.js';
 import {destroyCommentsLoader} from './comments.js';
+import {getData} from '../data/data.js';
+import {showErrorMessage} from '../data/messages.js';
 
 const bigPictureOverlayElement = document.querySelector('.big-picture.overlay');
 const bigPictureModalElement = bigPictureOverlayElement.querySelector('.big-picture__preview');
@@ -10,15 +11,15 @@ const bigPictureCloseButton = bigPictureModalElement.querySelector('.big-picture
 
 const isOverlayClickable = false;
 
-const openModalClickHandler = (evt) => {
+const openModalClickHandler = (data) => (evt) => {
   const targetElement = evt.target;
 
   if (targetElement.matches('.picture') || targetElement.matches('.picture__img')) {
     evt.preventDefault();
 
     const photoData = (targetElement.matches('.picture__img'))
-      ? mockData[targetElement.parentElement.dataset.index - 1]
-      : mockData[targetElement.dataset.index - 1];
+      ? data[targetElement.parentElement.dataset.index]
+      : data[targetElement.dataset.index];
 
     updateBigPicture(photoData);
     initModal(
@@ -32,9 +33,13 @@ const openModalClickHandler = (evt) => {
   }
 };
 
-const showGallery = () => {
-  pictures.render(mockData);
-  pictures.containerElement.addEventListener('click', openModalClickHandler);
+const dataSuccessHandler = (data) => {
+  pictures.render(data);
+  pictures.containerElement.addEventListener('click', openModalClickHandler(data));
 };
+
+const dataErrorHandler = (err) => showErrorMessage(err);
+
+const showGallery = () => getData(dataSuccessHandler, dataErrorHandler);
 
 export default showGallery;

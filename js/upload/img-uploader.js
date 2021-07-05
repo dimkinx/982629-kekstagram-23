@@ -1,4 +1,4 @@
-import initModal from '../helpers/modal.js';
+import {initModal, closeModal} from '../helpers/modal.js';
 import {initImgEditor, destroyImgEditor} from './img-editor.js';
 import {
   hashtagsInputElement,
@@ -6,17 +6,43 @@ import {
   initValidation,
   destroyValidation
 } from './text-validator.js';
+import {postData} from '../data/data.js';
+import {showSuccessMessage, showErrorMessage} from '../data/messages.js';
 
 const imgUploadInputElement = document.querySelector('.img-upload__input');
 const imgUploadOverlayElement = document.querySelector('.img-upload__overlay');
+const imgUploadFormElement = document.querySelector('.img-upload__form');
 const imgUploadModalElement = imgUploadOverlayElement.querySelector('.img-upload__wrapper');
-const imgUploadCloseButton = imgUploadModalElement.querySelector('.img-upload__cancel');
+const imgUploadCloseButtonElement = imgUploadModalElement.querySelector('.img-upload__cancel');
 
 const isOverlayClickable = false;
+
+const dataSuccessHandler = () => {
+  closeModal();
+  showSuccessMessage();
+};
+
+const dataErrorHandler = () => {
+  closeModal();
+  showErrorMessage();
+};
+
+const formSubmitHandler = (evt) => {
+  evt.preventDefault();
+
+  const formData = new FormData(evt.currentTarget);
+
+  postData(dataSuccessHandler, dataErrorHandler, formData);
+};
+
+const submitForm = () => {
+  imgUploadFormElement.addEventListener('submit', formSubmitHandler);
+};
 
 const openModalCallback = () => {
   initImgEditor();
   initValidation();
+  submitForm();
 };
 
 const closeModalCallback = () => {
@@ -25,6 +51,7 @@ const closeModalCallback = () => {
   imgUploadInputElement.value = '';
   hashtagsInputElement.value = '';
   descriptionTextareaElement.value = '';
+  imgUploadFormElement.removeEventListener('submit', formSubmitHandler);
 };
 
 const openModalClickHandler = () => {
@@ -36,7 +63,7 @@ const openModalClickHandler = () => {
     ? imgUploadInputElement.reportValidity()
     : initModal(
       imgUploadModalElement,
-      imgUploadCloseButton,
+      imgUploadCloseButtonElement,
       imgUploadOverlayElement,
       isOverlayClickable,
       openModalCallback,
