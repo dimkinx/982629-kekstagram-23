@@ -52,6 +52,8 @@ main {
 }
 
 .modal-open {
+  position: fixed;
+  width: 100%;
   height: 100vh;
   overflow: hidden;
 }
@@ -708,6 +710,31 @@ main {
   color: #000000;
 
   border-radius: 5px;
+  resize: vertical;
+}
+
+
+/**
+ * Стили для валидных полей в фокусе
+ */
+
+.text__hashtags:focus:valid,
+.text__description:focus:valid {
+  color: #008000;
+  border-color: #008000;
+  background-color: #e9ffe9;
+}
+
+
+/**
+ * Стили для невалидных полей
+ */
+
+.text__hashtags:invalid,
+.text__description:invalid {
+  color: #900;
+  border-color: #900;
+  background-color: #fdd;
 }
 
 

@@ -16,35 +16,35 @@ const Comments = {
   INCREMENT: 5,
 };
 
-const createCommentAvatar = (data) => {
-  const avatar = document.createElement('img');
+const createCommentAvatar = ({avatar, name}) => {
+  const avatarElement = document.createElement('img');
 
-  avatar.src = data.avatar;
-  avatar.classList.add('social__picture');
-  avatar.alt = data.name;
-  avatar.width = AvatarSize.WIDTH;
-  avatar.height = AvatarSize.HEIGHT;
+  avatarElement.src = avatar;
+  avatarElement.classList.add('social__picture');
+  avatarElement.alt = name;
+  avatarElement.width = AvatarSize.WIDTH;
+  avatarElement.height = AvatarSize.HEIGHT;
 
-  return avatar;
+  return avatarElement;
 };
 
-const createCommentText = (data) => {
-  const text = document.createElement('p');
+const createCommentText = ({message}) => {
+  const textElement = document.createElement('p');
 
-  text.classList.add('social__text');
-  text.textContent = data.message;
+  textElement.classList.add('social__text');
+  textElement.textContent = message;
 
-  return text;
+  return textElement;
 };
 
 const createComment = (data) => {
-  const comment = document.createElement('li');
+  const commentElement = document.createElement('li');
 
-  comment.classList.add('social__comment');
-  comment.insertAdjacentElement('afterbegin', createCommentAvatar(data));
-  comment.insertAdjacentElement('beforeend', createCommentText(data));
+  commentElement.classList.add('social__comment');
+  commentElement.insertAdjacentElement('afterbegin', createCommentAvatar(data));
+  commentElement.insertAdjacentElement('beforeend', createCommentText(data));
 
-  return comment;
+  return commentElement;
 };
 
 const getCommentFragment = makeFragmentRender(createComment);

@@ -1,5 +1,5 @@
 import showGallery from './gallery/gallery.js';
-import uploadImg from './upload/upload-img.js';
+import initImgUploader from './upload/img-uploader.js';
 
 showGallery();
-uploadImg();
+initImgUploader();
