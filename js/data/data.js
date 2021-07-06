@@ -1,29 +1,41 @@
-const getData = (successHandler, errorHandler) => fetch(
-  'https://23.javascript.pages.academy/kekstagram/data',
-)
-  .then((response) => {
-    if (response.ok) {
-      return response.json();
-    }
-    throw new Error(`${response.status} ${response.statusText}`);
-  })
-  .then((data) => successHandler(data))
-  .catch((err) => errorHandler(err));
+const GetRequest = {
+  URL: 'https://23.javascript.pages.academy/kekstagram/data',
+  METHOD: 'GET',
+};
 
-const postData = (successHandler, errorHandler, formData) => fetch(
-  'https://23.javascript.pages.academy/kekstagram',
+const PostRequest = {
+  URL: 'https://23.javascript.pages.academy/kekstagram',
+  METHOD: 'POST',
+};
+
+const createRequest = (url, method, successHandler, errorHandler, formData) => fetch(
+  url,
   {
-    method: 'POST',
+    method: method,
     body: formData,
-  },
-)
+  })
   .then((response) => {
     if (response.ok) {
       return response.json();
     }
     throw new Error(`${response.status} ${response.statusText}`);
   })
-  .then(() => successHandler())
-  .catch((err) => errorHandler(err));
+  .then(successHandler)
+  .catch(errorHandler);
+
+const getData = (successHandler, errorHandler) => createRequest(
+  GetRequest.URL,
+  GetRequest.METHOD,
+  successHandler,
+  errorHandler,
+);
+
+const postData = (successHandler, errorHandler, formData) => createRequest(
+  PostRequest.URL,
+  PostRequest.METHOD,
+  successHandler,
+  errorHandler,
+  formData,
+);
 
 export {getData, postData};

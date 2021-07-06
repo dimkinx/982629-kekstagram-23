@@ -3,49 +3,43 @@ import {initModal} from '../helpers/modal.js';
 const successTemplateElement = document.querySelector('#success');
 const errorTemplateElement = document.querySelector('#error');
 
-const isOverlayClickable = true;
-
 const closeModalCallback = (element) => () => element.remove();
 
 const showSuccessMessage = () => {
   document.body.appendChild(successTemplateElement.content.cloneNode(true));
 
   const successOverlayElement = document.querySelector('.success');
-  const successModalElement = successOverlayElement.querySelector('.success__inner');
-  const successButtonElement = successOverlayElement.querySelector('.success__button');
 
   if (successOverlayElement) {
     initModal(
-      successModalElement,
-      successButtonElement,
+      successOverlayElement.querySelector('.success__inner'),
+      successOverlayElement.querySelector('.success__button'),
       successOverlayElement,
-      isOverlayClickable,
+      true,
       null,
       closeModalCallback(successOverlayElement),
     );
   }
 };
 
-const showErrorMessage = (err) => {
-  const errorElement = errorTemplateElement.content.cloneNode(true);
-  document.body.appendChild(errorElement);
+const showErrorMessage = (error) => {
+  document.body.appendChild(errorTemplateElement.content.cloneNode(true));
 
   const errorOverlayElement = document.querySelector('.error');
-  const errorModalElement = errorOverlayElement.querySelector('.error__inner');
-  const errorTitleElement = errorOverlayElement.querySelector('.error__title');
-  const errorButtonElement = errorOverlayElement.querySelector('.error__button');
-
-  if (err) {
-    errorTitleElement.textContent = err;
-    errorButtonElement.textContent = 'Ок';
-  }
 
   if (errorOverlayElement) {
+    const errorButtonElement = errorOverlayElement.querySelector('.error__button');
+
+    if (error) {
+      errorOverlayElement.querySelector('.error__title').textContent = error;
+      errorButtonElement.textContent = 'Ок';
+    }
+
     initModal(
-      errorModalElement,
+      errorOverlayElement.querySelector('.error__inner'),
       errorButtonElement,
       errorOverlayElement,
-      isOverlayClickable,
+      true,
       null,
       closeModalCallback(errorOverlayElement),
     );

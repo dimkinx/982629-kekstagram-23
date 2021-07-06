@@ -131,7 +131,7 @@ const initSlider = () => {
     step: SliderDefaultParameters.STEP,
     connect: SliderDefaultParameters.CONNECT,
     format: {
-      to: (value) => (Number.isInteger(value)) ? value.toFixed(0) : value.toFixed(1),
+      to: (value) => value.toFixed(Number.isInteger(value) ? 0 : 1),
       from: (value) => parseFloat(value),
     },
   });

@@ -15,8 +15,6 @@ const imgUploadFormElement = document.querySelector('.img-upload__form');
 const imgUploadModalElement = imgUploadOverlayElement.querySelector('.img-upload__wrapper');
 const imgUploadCloseButtonElement = imgUploadModalElement.querySelector('.img-upload__cancel');
 
-const isOverlayClickable = false;
-
 const dataSuccessHandler = () => {
   closeModal();
   showSuccessMessage();
@@ -29,20 +27,13 @@ const dataErrorHandler = () => {
 
 const formSubmitHandler = (evt) => {
   evt.preventDefault();
-
-  const formData = new FormData(evt.currentTarget);
-
-  postData(dataSuccessHandler, dataErrorHandler, formData);
-};
-
-const submitForm = () => {
-  imgUploadFormElement.addEventListener('submit', formSubmitHandler);
+  postData(dataSuccessHandler, dataErrorHandler, new FormData(evt.currentTarget));
 };
 
 const openModalCallback = () => {
   initImgEditor();
   initValidation();
-  submitForm();
+  imgUploadFormElement.addEventListener('submit', formSubmitHandler);
 };
 
 const closeModalCallback = () => {
@@ -65,7 +56,7 @@ const openModalClickHandler = () => {
       imgUploadModalElement,
       imgUploadCloseButtonElement,
       imgUploadOverlayElement,
-      isOverlayClickable,
+      false,
       openModalCallback,
       closeModalCallback,
     );
