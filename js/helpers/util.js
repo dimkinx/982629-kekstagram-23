@@ -1,9 +1,10 @@
-const getRandomPositiveInteger = (firstNumber, secondNumber) => {
-  const lower = Math.ceil(Math.min(Math.abs(firstNumber), Math.abs(secondNumber)));
-  const upper = Math.floor(Math.max(Math.abs(firstNumber), Math.abs(secondNumber)));
-  const result = Math.random() * (upper - lower + 1) + lower;
+const debounce = function(cb, timeoutDelay = 500) {
+  let timeoutId;
 
-  return Math.floor(result);
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => cb.apply(this, rest), timeoutDelay);
+  };
 };
 
 const shuffleArray = (array) => [...array].map((_, index, newArray) => {
@@ -12,12 +13,6 @@ const shuffleArray = (array) => [...array].map((_, index, newArray) => {
 
   return newArray[index];
 });
-
-const checkStringLength = (string, length) => string.length <= length;
-
-const cropString = (string, length) => !checkStringLength(string) && string
-  .slice(0, length - 3)
-  .padEnd(length, '.');
 
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
@@ -34,10 +29,8 @@ const makeFragmentRender = (render) => (dataList) => {
 };
 
 export {
-  getRandomPositiveInteger,
+  debounce,
   shuffleArray,
-  checkStringLength,
-  cropString,
   isEscEvent,
   isSpaceEvent,
   makeFragmentRender
