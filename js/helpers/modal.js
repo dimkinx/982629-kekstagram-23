@@ -103,4 +103,4 @@ const initModal = (...args) => {
   openModal();
 };
 
-export default initModal;
+export {initModal, closeModal};

@@ -7,25 +7,25 @@ const effectsContainerElement = document.querySelector('.img-upload__effects');
 const imgPreviewElement = document.querySelector('.img-upload__preview img');
 
 const ScaleParameters = {
+  START: 100,
+  STEP: 25,
+  UNIT: '%',
+  FUNCTION: 'scale',
+  value: 100,
   Range: {
     MIN: 25,
     MAX: 100,
   },
-  START: 100,
-  STEP: 25,
-  UNITS: '%',
-  FUNCTION: 'scale',
-  value: 100,
 };
 
 const SliderDefaultParameters = {
+  START: 100,
+  STEP: 1,
+  CONNECT: 'lower',
   Range: {
     MIN: 0,
     MAX: 100,
   },
-  START: 100,
-  STEP: 1,
-  CONNECT: 'lower',
 };
 
 const effectValueToParameters = {
@@ -37,7 +37,7 @@ const effectValueToParameters = {
     FILTER: 'grayscale',
     START: 1,
     STEP: 0.1,
-    UNITS: '',
+    UNIT: '',
     Range: {
       MIN: 0,
       MAX: 1,
@@ -48,7 +48,7 @@ const effectValueToParameters = {
     FILTER: 'sepia',
     START: 1,
     STEP: 0.1,
-    UNITS: '',
+    UNIT: '',
     Range: {
       MIN: 0,
       MAX: 1,
@@ -59,7 +59,7 @@ const effectValueToParameters = {
     FILTER: 'invert',
     START: 100,
     STEP: 1,
-    UNITS: '%',
+    UNIT: '%',
     Range: {
       MIN: 0,
       MAX: 100,
@@ -70,7 +70,7 @@ const effectValueToParameters = {
     FILTER: 'blur',
     START: 3,
     STEP: 0.1,
-    UNITS: 'px',
+    UNIT: 'px',
     Range: {
       MIN: 0,
       MAX: 3,
@@ -81,7 +81,7 @@ const effectValueToParameters = {
     FILTER: 'brightness',
     START: 3,
     STEP: 0.1,
-    UNITS: '',
+    UNIT: '',
     Range: {
       MIN: 1,
       MAX: 3,
@@ -90,11 +90,11 @@ const effectValueToParameters = {
 };
 
 const setScaleValue = (value) => {
-  scaleControlValueElement.value = `${value}${ScaleParameters.UNITS}`;
+  scaleControlValueElement.value = `${value}${ScaleParameters.UNIT}`;
   imgPreviewElement.style.transform = `${ScaleParameters.FUNCTION}(${value / 100})`;
 };
 
-const scaleChangeHandler = (evt) => {
+const scaleClickHandler = (evt) => {
   const targetElement = evt.target;
 
   if (targetElement.matches('.scale__control--smaller')) {
@@ -131,15 +131,8 @@ const initSlider = () => {
     step: SliderDefaultParameters.STEP,
     connect: SliderDefaultParameters.CONNECT,
     format: {
-      to: function (value) {
-        if (Number.isInteger(value)) {
-          return value.toFixed(0);
-        }
-        return value.toFixed(1);
-      },
-      from: function (value) {
-        return parseFloat(value);
-      },
+      to: (value) => value.toFixed(Number.isInteger(value) ? 0 : 1),
+      from: (value) => parseFloat(value),
     },
   });
 };
@@ -171,19 +164,19 @@ const effectsChangeHandler = (evt) => {
 
       sliderElement.noUiSlider.on('update', (values, handle) => {
         sliderValueElement.value = values[handle];
-        imgPreviewElement.style.filter = `${effect.FILTER}(${values[handle]}${effect.UNITS})`;
+        imgPreviewElement.style.filter = `${effect.FILTER}(${values[handle]}${effect.UNIT})`;
       });
     }
   }
 };
 
 const initScaleImg = () => {
-  scaleControlValueElement.value = `${ScaleParameters.START}${ScaleParameters.UNITS}`;
-  scaleControlContainerElement.addEventListener('click', scaleChangeHandler);
+  scaleControlValueElement.value = `${ScaleParameters.START}${ScaleParameters.UNIT}`;
+  scaleControlContainerElement.addEventListener('click', scaleClickHandler);
 };
 
 const destroyScaleImg = () => {
-  scaleControlContainerElement.removeEventListener('click', scaleChangeHandler);
+  scaleControlContainerElement.removeEventListener('click', scaleClickHandler);
 };
 
 const initEffectImg = () => {
