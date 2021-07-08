@@ -21,7 +21,4 @@ const renderPictures = (data) => {
   picturesContainerElement.appendChild(getPictureFragment(data));
 };
 
-export {
-  picturesContainerElement as containerElement,
-  renderPictures as render
-};
+export {picturesContainerElement, renderPictures};
