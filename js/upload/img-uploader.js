@@ -9,14 +9,15 @@ import {
 import {postData} from '../data/data.js';
 import {showSuccessMessage, showErrorMessage} from '../data/messages.js';
 
+const reader = new FileReader();
+
 const imgUploadInputElement = document.querySelector('.img-upload__input');
 const imgUploadPreviewElement = document.querySelector('.img-upload__preview img');
+const effectsPreviewElements = document.querySelectorAll('.effects__preview');
 const imgUploadOverlayElement = document.querySelector('.img-upload__overlay');
 const imgUploadFormElement = document.querySelector('.img-upload__form');
 const imgUploadModalElement = imgUploadOverlayElement.querySelector('.img-upload__wrapper');
 const imgUploadCloseButtonElement = imgUploadModalElement.querySelector('.img-upload__cancel');
-
-const reader = new FileReader();
 
 const dataSuccessHandler = () => {
   closeModal();
@@ -33,9 +34,13 @@ const formSubmitHandler = (evt) => {
   postData(dataSuccessHandler, dataErrorHandler, new FormData(evt.currentTarget));
 };
 
-const readerLoadHandler = () => imgUploadPreviewElement.src = reader.result;
+const readerLoadHandler = () => {
+  imgUploadPreviewElement.src = reader.result;
+  effectsPreviewElements.forEach((element) => element.style.backgroundImage = `url(${reader.result})`);
+};
 
 const addPreviewImg = () => {
+  imgUploadPreviewElement.src = '';
   reader.addEventListener('load', readerLoadHandler);
   reader.readAsDataURL(imgUploadInputElement.files[0]);
 };

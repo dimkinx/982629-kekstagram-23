@@ -1,18 +1,18 @@
 import {isEscEvent} from './util.js';
 
+const InitModal = {};
+
 const bodyElement = document.body;
 
-const init = {};
-
 const modalElementFocusHandler = (evt) => {
-  if (!init.modalElement.contains(evt.target)) {
+  if (!InitModal.modalElement.contains(evt.target)) {
     evt.stopPropagation();
-    init.modalElement.focus();
+    InitModal.modalElement.focus();
   }
 };
 
 const escKeydownHandler = (evt) => {
-  if (evt.target.tagName !== 'INPUT'
+  if (evt.target.type !== 'text'
     && evt.target.tagName !== 'TEXTAREA'
     && isEscEvent(evt)) {
     evt.preventDefault();
@@ -21,7 +21,7 @@ const escKeydownHandler = (evt) => {
 };
 
 const overlayElementClickHandler = (evt) => {
-  if (evt.target.matches(init.overlayElement.tagName)) {
+  if (evt.target.matches(InitModal.overlayElement.tagName)) {
     closeModal();
   }
 };
@@ -31,73 +31,73 @@ const closeButtonClickHandler = () => {
 };
 
 function closeModal () {
-  if (init.overlayElement) {
+  if (InitModal.overlayElement) {
     bodyElement.classList.remove('modal-open');
-    window.scrollTo(0, init.scrollPosition);
+    window.scrollTo(0, InitModal.scrollPosition);
     bodyElement.removeAttribute('style');
-    init.modalElement.removeAttribute('tabindex');
-    init.overlayElement.classList.add('hidden');
-    init.lastFocus.focus();
+    InitModal.modalElement.removeAttribute('tabindex');
+    InitModal.overlayElement.classList.add('hidden');
+    InitModal.lastFocus.focus();
 
     document.removeEventListener('focus', modalElementFocusHandler, true);
     document.removeEventListener('keydown', escKeydownHandler);
 
-    if (init.isOverlayClickable) {
-      init.overlayElement.removeEventListener('click', overlayElementClickHandler);
+    if (InitModal.isOverlayClickable) {
+      InitModal.overlayElement.removeEventListener('click', overlayElementClickHandler);
     }
 
-    if (init.closeButton) {
-      init.closeButton.removeEventListener('click', closeButtonClickHandler);
+    if (InitModal.closeButton) {
+      InitModal.closeButton.removeEventListener('click', closeButtonClickHandler);
     }
   }
 
-  if (init.closeModalCallback) {
-    init.closeModalCallback();
+  if (InitModal.closeModalCallback) {
+    InitModal.closeModalCallback();
   }
 }
 
 function openModal() {
-  init.lastFocus = document.activeElement;
-  init.scrollPosition = window.pageYOffset;
-  init.paddingSize = window.innerWidth - bodyElement.clientWidth;
+  InitModal.lastFocus = document.activeElement;
+  InitModal.scrollPosition = window.pageYOffset;
+  InitModal.paddingSize = window.innerWidth - bodyElement.clientWidth;
 
-  bodyElement.style.top = `-${init.scrollPosition}px`;
+  bodyElement.style.top = `-${InitModal.scrollPosition}px`;
 
-  if (init.paddingSize) {
-    bodyElement.style.paddingRight = `${init.paddingSize}px`;
+  if (InitModal.paddingSize) {
+    bodyElement.style.paddingRight = `${InitModal.paddingSize}px`;
   }
 
-  if (init.overlayElement && init.modalElement) {
+  if (InitModal.overlayElement && InitModal.modalElement) {
     bodyElement.classList.add('modal-open');
-    init.overlayElement.classList.remove('hidden');
-    init.modalElement.tabIndex = -1;
-    init.modalElement.focus();
+    InitModal.overlayElement.classList.remove('hidden');
+    InitModal.modalElement.tabIndex = -1;
+    InitModal.modalElement.focus();
 
     document.addEventListener('focus', modalElementFocusHandler, true);
     document.addEventListener('keydown', escKeydownHandler);
 
-    if (init.isOverlayClickable) {
-      init.overlayElement.addEventListener('click', overlayElementClickHandler);
+    if (InitModal.isOverlayClickable) {
+      InitModal.overlayElement.addEventListener('click', overlayElementClickHandler);
     }
 
-    if (init.closeButton) {
-      init.closeButton.addEventListener('click', closeButtonClickHandler);
+    if (InitModal.closeButton) {
+      InitModal.closeButton.addEventListener('click', closeButtonClickHandler);
     }
   }
 
-  if (init.openModalCallback) {
-    init.openModalCallback();
+  if (InitModal.openModalCallback) {
+    InitModal.openModalCallback();
   }
 }
 
 const initModal = (...args) => {
   [
-    init.modalElement,
-    init.closeButton,
-    init.overlayElement,
-    init.isOverlayClickable,
-    init.openModalCallback,
-    init.closeModalCallback,
+    InitModal.modalElement,
+    InitModal.closeButton,
+    InitModal.overlayElement,
+    InitModal.isOverlayClickable,
+    InitModal.openModalCallback,
+    InitModal.closeModalCallback,
   ] = [...args];
 
   openModal();

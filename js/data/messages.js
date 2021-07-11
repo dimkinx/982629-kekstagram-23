@@ -31,7 +31,7 @@ const showErrorMessage = (error) => {
     const errorButtonElement = errorOverlayElement.querySelector('.error__button');
 
     if (error) {
-      errorOverlayElement.querySelector('.error__title').textContent = error;
+      errorOverlayElement.querySelector('.error__title').textContent = 'Не удалось загрузить изображения!';
       errorButtonElement.textContent = 'Ок';
     }
 

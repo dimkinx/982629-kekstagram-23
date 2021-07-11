@@ -1,11 +1,11 @@
 import {isSpaceEvent} from '../helpers/util.js';
 
-const hashtagsInputElement = document.querySelector('.text__hashtags');
-const descriptionTextareaElement = document.querySelector('.text__description');
-
 const HASHTAGS_MAX_NUM = 5;
 const HASHTAG_MAX_LENGTH = 20;
 const DESCRIPTION_MAX_LENGTH = 140;
+
+const hashtagsInputElement = document.querySelector('.text__hashtags');
+const descriptionTextareaElement = document.querySelector('.text__description');
 
 const getRemainderOfNum = (num) => {
   if (num % 100 > 19) {

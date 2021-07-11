@@ -1,13 +1,17 @@
-const debounce = function(cb, timeoutDelay = 500) {
-  let timeoutId;
+const debounce = function(cb, timeoutDelay) {
+  let timeoutId = 0;
 
   return (...rest) => {
+    if (!timeoutId) {
+      cb.apply(this, rest);
+    }
+
     clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => cb.apply(this, rest), timeoutDelay);
+    timeoutId = setTimeout(() => timeoutId = null, timeoutDelay);
   };
 };
 
-const shuffleArray = (array) => [...array].map((_, index, newArray) => {
+const shuffleArray = (array) => array.map((_, index, newArray) => {
   const randomIndex = index + (Math.floor(Math.random() * (newArray.length - index)));
   [newArray[index], newArray[randomIndex]] = [newArray[randomIndex], newArray[index]];
 
