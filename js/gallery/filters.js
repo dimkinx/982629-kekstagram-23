@@ -1,9 +1,9 @@
 import {debounce, shuffleArray} from '../helpers/util.js';
 
+const TIMEOUT_DELAY = 500;
+
 const filtersContainerElement = document.querySelector('.img-filters');
 const filtersButtonsElements = filtersContainerElement.querySelectorAll('.img-filters__button');
-
-const TIMEOUT_DELAY = 500;
 
 const filtersClickHandler = (data, cb) => (evt) => {
   const targetElement = evt.target;
@@ -32,13 +32,13 @@ const filtersClickHandler = (data, cb) => (evt) => {
       ) => secondPictureData.comments.length - firstPictureData.comments.length);
     }
 
-    cb(filteredData);
+    return cb(filteredData);
   }
 };
 
 const initFilters = (data, cb) => {
   filtersContainerElement.classList.remove('img-filters--inactive');
-  filtersContainerElement.addEventListener('click', filtersClickHandler(data, debounce(cb, TIMEOUT_DELAY)));
+  filtersContainerElement.addEventListener('click', debounce(filtersClickHandler(data, cb), TIMEOUT_DELAY));
 };
 
 export {initFilters};

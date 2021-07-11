@@ -1,10 +1,3 @@
-const scaleControlContainerElement = document.querySelector('.img-upload__scale');
-const scaleControlValueElement = document.querySelector('.scale__control--value');
-const sliderElement = document.querySelector('.effect-level__slider');
-const sliderContainerElement = document.querySelector('.img-upload__effect-level');
-const sliderValueElement = document.querySelector('.effect-level__value');
-const effectsContainerElement = document.querySelector('.img-upload__effects');
-const imgPreviewElement = document.querySelector('.img-upload__preview img');
 
 const ScaleParameters = {
   START: 100,
@@ -88,6 +81,15 @@ const effectValueToParameters = {
     },
   },
 };
+
+const scaleControlContainerElement = document.querySelector('.img-upload__scale');
+const scaleControlValueElement = document.querySelector('.scale__control--value');
+const sliderElement = document.querySelector('.effect-level__slider');
+const sliderContainerElement = document.querySelector('.img-upload__effect-level');
+const sliderValueElement = document.querySelector('.effect-level__value');
+const effectsContainerElement = document.querySelector('.img-upload__effects');
+const noneEffectInputElement = document.querySelector('#effect-none');
+const imgPreviewElement = document.querySelector('.img-upload__preview img');
 
 const setScaleValue = (value) => {
   scaleControlValueElement.value = `${value}${ScaleParameters.UNIT}`;
@@ -184,6 +186,7 @@ const initEffectImg = () => {
   sliderContainerElement.classList.add('hidden');
   initSlider();
   sliderValueElement.value = '';
+  noneEffectInputElement.checked = true;
   effectsContainerElement.addEventListener('change', effectsChangeHandler);
 };
 

@@ -1,9 +1,5 @@
 import {makeFragmentRender} from '../helpers/util.js';
 
-const commentCountElement = document.querySelector('.social__comment-count');
-const commentsListElement = document.querySelector('.social__comments');
-const commentsLoaderButton = document.querySelector('.comments-loader');
-
 const  AvatarSize = {
   WIDTH: 35,
   HEIGHT: 35,
@@ -15,6 +11,10 @@ const Comments = {
   allNum: 0,
   INCREMENT: 5,
 };
+
+const commentCountElement = document.querySelector('.social__comment-count');
+const commentsListElement = document.querySelector('.social__comments');
+const commentsLoaderButton = document.querySelector('.comments-loader');
 
 const createCommentAvatar = ({avatar, name}) => {
   const avatarElement = document.createElement('img');
