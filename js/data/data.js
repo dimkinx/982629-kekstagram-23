@@ -1,11 +1,12 @@
-const GetRequest = {
-  URL: 'https://23.javascript.pages.academy/kekstagram/data',
-  METHOD: 'GET',
-};
-
-const PostRequest = {
-  URL: 'https://23.javascript.pages.academy/kekstagram',
-  METHOD: 'POST',
+const Request = {
+  Get: {
+    URL: 'https://23.javascript.pages.academy/kekstagram/data',
+    METHOD: 'GET',
+  },
+  Post: {
+    URL: 'https://23.javascript.pages.academy/kekstagram',
+    METHOD: 'POST',
+  },
 };
 
 const createRequest = (url, method, successHandler, errorHandler, formData) => fetch(
@@ -24,15 +25,15 @@ const createRequest = (url, method, successHandler, errorHandler, formData) => f
   .catch(errorHandler);
 
 const getData = (successHandler, errorHandler) => createRequest(
-  GetRequest.URL,
-  GetRequest.METHOD,
+  Request.Get.URL,
+  Request.Get.METHOD,
   successHandler,
   errorHandler,
 );
 
 const postData = (successHandler, errorHandler, formData) => createRequest(
-  PostRequest.URL,
-  PostRequest.METHOD,
+  Request.Post.URL,
+  Request.Post.METHOD,
   successHandler,
   errorHandler,
   formData,

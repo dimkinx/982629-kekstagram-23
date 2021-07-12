@@ -1,5 +1,5 @@
 const debounce = function(cb, timeoutDelay) {
-  let timeoutId = 0;
+  let timeoutId;
 
   return (...rest) => {
     if (!timeoutId) {
@@ -7,15 +7,17 @@ const debounce = function(cb, timeoutDelay) {
     }
 
     clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => timeoutId = null, timeoutDelay);
+    timeoutId = setTimeout(() => {
+      timeoutId = undefined;
+    }, timeoutDelay);
   };
 };
 
-const shuffleArray = (array) => array.map((_, index, newArray) => {
-  const randomIndex = index + (Math.floor(Math.random() * (newArray.length - index)));
-  [newArray[index], newArray[randomIndex]] = [newArray[randomIndex], newArray[index]];
+const shuffleArray = (arrayData) => arrayData.map((_, index, newArrayData) => {
+  const randomIndex = index + (Math.floor(Math.random() * (newArrayData.length - index)));
+  [newArrayData[index], newArrayData[randomIndex]] = [newArrayData[randomIndex], newArrayData[index]];
 
-  return newArray[index];
+  return newArrayData[index];
 });
 
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';

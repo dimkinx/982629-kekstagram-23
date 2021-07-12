@@ -25,46 +25,46 @@ const getEndingWords = (num, nominative, genitiveSingular, genitivePlural) => {
     : genitiveSingular;
 };
 
-const getHashtagErrorMessage = (hashtag, index) => {
-  if (hashtag[0] !== '#') {
+const getHashtagErrorMessage = (hashtagText, index) => {
+  if (hashtagText[0] !== '#') {
     return 'Хэш-тег должен начинаться с символа # (решётка)';
   }
 
-  if (hashtag.length > HASHTAG_MAX_LENGTH) {
-    const difference = hashtag.length - HASHTAG_MAX_LENGTH;
+  if (hashtagText.length > HASHTAG_MAX_LENGTH) {
+    const difference = hashtagText.length - HASHTAG_MAX_LENGTH;
     const words = getEndingWords(difference, 'символ', 'символа', 'символов');
 
     return `Вы превысили максимальную длину ${++index}-го хэш-тега на ${difference} ${words}`;
   }
 
-  if (!hashtag.slice(1)) {
+  if (!hashtagText.slice(1)) {
     return 'Хеш-тег не может состоять только из одной решётки';
   }
 
-  if (!(/^[а-яa-z0-9]+$/).test(hashtag.slice(1).toLowerCase())) {
+  if (!(/^[а-яa-z0-9]+$/).test(hashtagText.slice(1).toLowerCase())) {
     return 'Строка хэш-тега после решётки должна состоять из букв и чисел';
   }
 
   return '';
 };
 
-const getHashtagsErrorMessage = (hashtags) => {
-  const array = hashtags
+const getHashtagsErrorMessage = (hashtagsText) => {
+  const hashtags = hashtagsText
     .toLowerCase()
     .split(' ')
     .filter((hashtag) => hashtag.length > 0);
 
-  if (array.length > HASHTAGS_MAX_NUM) {
+  if (hashtags.length > HASHTAGS_MAX_NUM) {
     return `Нельзя указать больше ${HASHTAGS_MAX_NUM} хэш-тегов`;
   }
 
-  if (array.length !== [...new Set(array)].length) {
+  if (hashtags.length !== [...new Set(hashtags)].length) {
     return 'Один и тот же хэш-тег не может быть использован дважды';
   }
 
-  for (let i = 0; i < array.length; i++) {
-    if (getHashtagErrorMessage(array[i])) {
-      return getHashtagErrorMessage(array[i], i);
+  for (let i = 0; i < hashtags.length; i++) {
+    if (getHashtagErrorMessage(hashtags[i])) {
+      return getHashtagErrorMessage(hashtags[i], i);
     }
   }
 
@@ -100,7 +100,6 @@ const hashtagBlurHandler = () => {
 
   hashtagsInputElement.value = hashtagsInputElement.value.trim();
   hashtagsInputElement.setCustomValidity(getHashtagsErrorMessage(hashtagsInputElement.value));
-  hashtagsInputElement.reportValidity();
 };
 
 const hashtagInputHandler = () => {

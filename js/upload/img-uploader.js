@@ -36,7 +36,9 @@ const formSubmitHandler = (evt) => {
 
 const readerLoadHandler = () => {
   imgUploadPreviewElement.src = reader.result;
-  effectsPreviewElements.forEach((element) => element.style.backgroundImage = `url(${reader.result})`);
+  effectsPreviewElements.forEach((element) => {
+    element.style.backgroundImage = `url(${reader.result})`;
+  });
 };
 
 const addPreviewImg = () => {

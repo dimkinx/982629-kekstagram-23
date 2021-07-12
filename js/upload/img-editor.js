@@ -173,6 +173,7 @@ const effectsChangeHandler = (evt) => {
 };
 
 const initScaleImg = () => {
+  ScaleParameters.value = ScaleParameters.START;
   scaleControlValueElement.value = `${ScaleParameters.START}${ScaleParameters.UNIT}`;
   scaleControlContainerElement.addEventListener('click', scaleClickHandler);
 };
